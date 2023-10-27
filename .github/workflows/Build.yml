@@ -56,10 +56,6 @@ jobs:
         echo ${{ github.event.pull_request.merged }}
         echo ${{ github.event.pull_request.merged == 'true' }}
         echo ${{ github.event.pull_request.merged == true }}
-      env:
-        MERGED_RAW: ${{ github.event.pull_request.merged }}
-        MERGED_TRUE_STR: ${{ github.event.pull_request.merged == 'true' }}
-        MERGED_TRUE_BOOL: ${{ github.event.pull_request.merged == true }}
 
     - name: Auto Create Tag on Pull-Request Merged
       if: github.event_name == 'pull_request' && github.event.pull_request.merged == true && github.event.action == 'closed'
