@@ -1,0 +1,57 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: .NET
+
+on:
+  push:
+    branches: [ "*" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: [windows-latest]
+
+    steps:
+    
+    - name: Install .NET SDK
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x 
+    
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Gitversion Install
+      run: dotnet tool install --global GitVersion.Tool --version 5.*
+      continue-on-error: true
+
+    - name: Gitversion Determine Version
+      run: dotnet-gitversion /output json /output buildserver /config GitVersion.yml /updateprojectfiles
+
+    - name: DotNet Restore
+      run: dotnet restore 
+
+    - name: DotNet Build
+      run: dotnet build --configuration Release --no-restore --verbosity normal
+
+    - name: DotNet Test
+      run: dotnet test --configuration Release --no-build --verbosity normal
+  
+    - name: DotNet Pack
+      run: dotnet pack --configuration Release /p:Version=${{ env.GitVersion_SemVer }} --no-build --output "${{ github.workspace }}\Output\Nuget"
+
+    - name: Auto Create Tag on Pull-Request Merged test     
+      run: |
+        echo "The string is: ${{github.event_name }}"
+        echo "The string is: ${{github.event.pull_request.merged }}"
+        echo "The string is: ${{github.event.action }}"
+
+    - name: Auto Create Tag on Pull-Request Merged
+      if: github.event_name == 'pull_request' && github.event.pull_request.merged == true && github.event.action == 'closed'
+      run: |
+        git push orgin $env:GitVersion_SemVer 

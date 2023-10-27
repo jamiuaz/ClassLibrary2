@@ -1,0 +1,4 @@
+assembly-informational-format: '{FullSemVer}'
+ignore:
+  sha: []
+merge-message-formats: {}
