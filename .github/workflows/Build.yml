@@ -51,7 +51,7 @@ jobs:
     - name: DotNet Pack
       run: dotnet pack --configuration Release /p:Version=${{ env.GitVersion_SemVer }} --no-build --output "${{ github.workspace }}\Output\Nuget"
 
-    - name: Auto Create Tag on Pull-Request Merged test     
+    - name: Auto Create Tag on Pull-Request Merged test 
       run: |          
         echo "github.event.pull_request.merged           : $MERGED_RAW"
         echo "github.event.pull_request.merged == 'true' : $MERGED_TRUE_STR"
