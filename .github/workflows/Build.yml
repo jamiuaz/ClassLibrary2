@@ -52,10 +52,10 @@ jobs:
       run: dotnet pack --configuration Release /p:Version=${{ env.GitVersion_SemVer }} --no-build --output "${{ github.workspace }}\Output\Nuget"
 
     - name: Auto Create Tag on Pull-Request Merged test 
-      run: |          
-        echo ${{ github.event.pull_request.merged }}
-        echo ${{ github.event.pull_request.merged == 'true' }}
-        echo ${{ github.event.pull_request.merged == true }}
+      run: | 
+        echo "cc ${{ github.event.pull_request.merged }}"
+        echo "vv ${{ github.event.pull_request.merged == 'true' }}"
+        echo "gg ${{ github.event.pull_request.merged == true }}"
 
     - name: Auto Create Tag on Pull-Request Merged
       if: github.event_name == 'pull_request' && github.event.pull_request.merged == true && github.event.action == 'closed'
