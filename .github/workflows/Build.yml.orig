@@ -53,13 +53,22 @@ jobs:
 
     - name: Auto Create Tag on Pull-Request Merged test 
       run: |          
+<<<<<<< HEAD
         echo ${{ github.event.pull_request.merged }}
         echo ${{ github.event.pull_request.merged == 'true' }}
         echo ${{ github.event.pull_request.merged == true }}
+=======
+        echo "github.event.pull_request.merged           : $MERGED_RAW"
+        echo "github.event.pull_request.merged == 'true' : $MERGED_TRUE_STR"
+        echo "github.event.pull_request.merged  == true  : $MERGED_TRUE_BOOL"
+        echo "The event_name is: ${{ github.event_name }}"
+        echo "The event.pull_request.merged is: ${{ github.event.pull_request.merged }}"
+        echo "The event action is: ${{ github.event.action }}"      
       env:
         MERGED_RAW: ${{ github.event.pull_request.merged }}
         MERGED_TRUE_STR: ${{ github.event.pull_request.merged == 'true' }}
         MERGED_TRUE_BOOL: ${{ github.event.pull_request.merged == true }}
+>>>>>>> origin/main
 
     - name: Auto Create Tag on Pull-Request Merged
       if: github.event_name == 'pull_request' && github.event.pull_request.merged == true && github.event.action == 'closed'
