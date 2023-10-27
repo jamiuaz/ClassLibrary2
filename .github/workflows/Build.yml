@@ -17,11 +17,6 @@ jobs:
 
     steps:
     
-    - name: Install .NET SDK
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 6.0.x 
-    
     - name: Checkout
       uses: actions/checkout@v3
       with:
@@ -39,24 +34,6 @@ jobs:
 
     - name: Gitversion Determine Version
       run: dotnet-gitversion /output json /output buildserver /config GitVersion.yml /updateprojectfiles
-
-    - name: DotNet Restore
-      run: dotnet restore 
-
-    - name: DotNet Build
-      run: dotnet build --configuration Release --no-restore --verbosity normal
-
-    - name: DotNet Test
-      run: dotnet test --configuration Release --no-build --verbosity normal
-  
-    - name: DotNet Pack
-      run: dotnet pack --configuration Release /p:Version=${{ env.GitVersion_SemVer }} --no-build --output "${{ github.workspace }}\Output\Nuget"
-
-    - name: Get All Event
-      env:
-        GITHUB_CONTEXT: ${{ toJson(github) }}
-      run: |
-        echo "$GITHUB_CONTEXT"
 
     - name: Auto Create Tag on Pull-Request Merged
       if: github.event_name == 'pull_request' && github.event.pull_request.merged == true && github.event.action == 'closed'
