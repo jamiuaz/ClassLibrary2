@@ -26,6 +26,12 @@ jobs:
       with:
         fetch-depth: 0
 
+    - name: Auto Create Tag on Pull-Request Merged test you  
+      run: |
+        echo "The event_name is: ${{ github.event_name }}"
+        echo "The event.pull_request.merged is: ${{ github.event.pull_request.merged }}"
+        echo "The event action is: ${{ github.event.action }}"      
+
     - name: Gitversion Install
       run: dotnet tool install --global GitVersion.Tool --version 5.*
       continue-on-error: true
@@ -47,9 +53,9 @@ jobs:
 
     - name: Auto Create Tag on Pull-Request Merged test     
       run: |
-        echo "The string is: ${{github.event_name }}"
-        echo "The string is: ${{github.event.pull_request.merged }}"
-        echo "The string is: ${{github.event.action }}"
+        echo "The event_name is: ${{ github.event_name }}"
+        echo "The event.pull_request.merged is: ${{ github.event.pull_request.merged }}"
+        echo "The event action is: ${{ github.event.action }}"      
 
     - name: Auto Create Tag on Pull-Request Merged
       if: github.event_name == 'pull_request' && github.event.pull_request.merged == true && github.event.action == 'closed'
