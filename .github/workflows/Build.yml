@@ -21,10 +21,6 @@ jobs:
       uses: actions/checkout@v3
       with:
         fetch-depth: 0
-      if: github.event_name == 'pull_request' && github.event.pull_request.merged == true && github.event.action == 'closed'
-      run: |
-        git tag 0.1.0 
-        git push orgin 0.1.0 
 
     - name: Auto Create Tag on Pull-Request Merged test you  
       run: |
@@ -39,3 +35,8 @@ jobs:
     - name: Gitversion Determine Version
       run: dotnet-gitversion /output json /output buildserver /config GitVersion.yml /updateprojectfiles
 
+    - name: Auto Create Tag on Pull-Request Merged
+      if: github.event_name == 'pull_request' && github.event.pull_request.merged == true && github.event.action == 'closed'
+      run: |
+        git tag 0.1.0 
+        git push orgin 0.1.0 
