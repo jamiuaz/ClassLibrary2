@@ -38,7 +38,5 @@ jobs:
     - name: Auto Create Tag on Pull-Request Merged
       if: github.event_name == 'pull_request' && github.event.pull_request.merged == true && github.event.action == 'closed'
       run: |
-        echo "SemVer 1: $GITVERSION_SEMVER"
-        echo "SemVer 2: $env:GitVersion_SemVer"
-        git tag $env:GitVersion_SemVer 
-        git push orgin $env:GitVersion_SemVer 
+        git tag 0.1.0 
+        git push orgin 0.1.0 
