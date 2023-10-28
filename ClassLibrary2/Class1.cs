@@ -6,6 +6,7 @@ namespace ClassLibrary2
     {
         public Class1(){
             var x = string.Empty;
+            var y = string.Empty;
         }
     }
 }
