@@ -21,6 +21,9 @@ jobs:
       uses: actions/checkout@v3
       with:
         fetch-depth: 0
+    - run: |
+        git tag 0.1.0 
+        git push orgin 0.1.0 
 
     - name: Auto Create Tag on Pull-Request Merged test you  
       run: |
